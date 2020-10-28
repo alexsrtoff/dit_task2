@@ -10,12 +10,12 @@
 
 
     <properties>
-<!--        <h2.version>1.4.200</h2.version>-->
-<!--        <junit.version>4.12</junit.version>-->
-<!--        <jersey.version>2.32</jersey.version>-->
-<!--        <jackson-json.version>2.11.3</jackson-json.version>-->
-<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+        <!--        <h2.version>1.4.200</h2.version>-->
+        <!--        <jersey.version>2.32</jersey.version>-->
+        <!--        <jackson-json.version>2.11.3</jackson-json.version>-->
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <junit.version>4.12</junit.version>
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -42,12 +42,43 @@
             <version>${logback.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ru.sber.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
