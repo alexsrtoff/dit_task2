@@ -5,13 +5,9 @@ import ru.sber.service.*;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.List;
 
 @Slf4j
 public class FileWatchService {
-    private final Exec deleteFile = new DeleteFileImpl();
-    private final Exec readFile = new ReadFileImpl();
-
 
     private void watch(final String filePath) {
         try {
@@ -40,9 +36,9 @@ public class FileWatchService {
                         public void run() {
                             String fileName = event.context().toString();
                             if (!event.context().toString().endsWith(".json") && !event.context().toString().endsWith(".xml")) {
-                                deleteFile.exec(filePath, fileName);
+                                new DeleteFileImpl().exec(filePath, fileName);
                             } else {
-                                readFile.exec(filePath, fileName);
+                                new ReadFileImpl().exec(filePath, fileName);
                             }
                         }
                     }).start();
